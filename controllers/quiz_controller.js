@@ -1,3 +1,4 @@
+// Por que trabaja con el modelo de la BBDD
 var models = require('../models/models.js');
 
 //Autoload
