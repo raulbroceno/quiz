@@ -38,7 +38,22 @@ app.use(function(req, res, next){
 	res.locals.session = req.session;
 	next();
 });
-
+app.use(function(req,res,next){
+	var DOSMINUTOS = 120000; // En milisegundos.
+	if (req.session.user){
+		//Solamente le doy mas tiempo si no ha superado dos minutos des de la anterior consulta
+		var fechaActual = new Date();
+		console.log ("\nAPP.JS -- Fecha de expiración: " +  req.session.cookie.expires + "\n Valor de tiempoLimite: " + req.session.user.tiempoLim + "\n Usuario: " + req.session.user.username);
+		/*if (req.session.user.tiempoLim < fechaActual){
+			req.session.cookie.expires = new Date(Date.now() + DOSMINUTOS);	
+			req.session.user.tiempoLim = req.session.cookie.expires;
+			console.log ("He creado una nueva fecha límite de la cookie:" +  req.session.cookie.expires + " , para el usuario: " + req.session.user);
+		} */
+	}else{
+		console.log ("No hay sesion de usuario");
+	}
+	next();
+});
 
 app.use('/', routes);
 //Modificado: app.use('/users', users);

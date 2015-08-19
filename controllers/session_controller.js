@@ -26,6 +26,14 @@ exports.create = function(req, res){
 			}
 		
 			req.session.user = {id: user.id, username: user.username};
+			var fecha = new Date();
+			//console.log("SESSION_CONTROLER.JS -- Fecha antes de sumar dos minutos: \n"+ fecha);
+			fecha = new Date(fecha.getTime() + 120000);
+			req.session.user.tiempoLim = fecha;
+			req.session.cookie.expires = fecha;
+			console.log("\n SESSION_CONTROLER.JS -- Fecha despues de sumar dos minutos en variable: \n" + req.session.user.tiempoLim);
+			console.log("\n SESSION_CONTROLER.JS -- Fecha despues de sumar dos minutos en cookie: \n" + req.session.cookie.expires);
+		
 			res.redirect(req.session.redir.toString());
 		}
 	);
